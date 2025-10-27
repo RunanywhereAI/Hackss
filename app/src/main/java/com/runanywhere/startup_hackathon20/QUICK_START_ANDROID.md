@@ -10,18 +10,18 @@ This guide shows you how to create a new Android app with a simple text chat int
 
 **1. Download BOTH SDK AARs:**
 
-[Download RunAnywhereKotlinSDK-release.aar](https://github.com/RunanywhereAI/runanywhere-sdks/releases/download/android/v0.1.0-alpha/RunAnywhereKotlinSDK-release.aar) (Core SDK - 3.9MB)
+[Download RunAnywhereKotlinSDK-release-clean.aar](https://github.com/RunanywhereAI/runanywhere-sdks/releases/download/android/v0.1.1-alpha/RunAnywhereKotlinSDK-release-clean.aar) (Core SDK - 4.0MB)
 
-[Download runanywhere-llm-llamacpp-release.aar](https://github.com/RunanywhereAI/runanywhere-sdks/releases/download/android/v0.1.0-alpha/runanywhere-llm-llamacpp-release.aar) (LLM Module - 2.1MB)
+[Download runanywhere-llm-llamacpp-release.aar](https://github.com/RunanywhereAI/runanywhere-sdks/releases/download/android/v0.1.1-alpha/runanywhere-llm-llamacpp-release.aar) (LLM Module - 2.1MB)
 
 Or via command line:
 
 ```bash
 curl -L -o RunAnywhereKotlinSDK-release.aar \
-  https://github.com/RunanywhereAI/runanywhere-sdks/releases/download/android/v0.1.0-alpha/RunAnywhereKotlinSDK-release.aar
+  https://github.com/RunanywhereAI/runanywhere-sdks/releases/download/android/v0.1.1-alpha/RunAnywhereKotlinSDK-release-clean.aar
 
 curl -L -o runanywhere-llm-llamacpp-release.aar \
-  https://github.com/RunanywhereAI/runanywhere-sdks/releases/download/android/v0.1.0-alpha/runanywhere-llm-llamacpp-release.aar
+  https://github.com/RunanywhereAI/runanywhere-sdks/releases/download/android/v0.1.1-alpha/runanywhere-llm-llamacpp-release.aar
 ```
 
 **2. Add to your project:**
@@ -35,14 +35,14 @@ Place BOTH AAR files in `app/libs/`:
 
 ```kotlin
 dependencies {
-    // Core SDK
-    implementation(files("libs/RunAnywhereKotlinSDK-release.aar"))
+  // Core SDK
+  implementation(files("libs/RunAnywhereKotlinSDK-release.aar"))
 
-    // LLM Module (includes llama.cpp with 7 ARM64 CPU variants)
-    implementation(files("libs/runanywhere-llm-llamacpp-release.aar"))
+  // LLM Module (includes llama.cpp with 7 ARM64 CPU variants)
+  implementation(files("libs/runanywhere-llm-llamacpp-release.aar"))
 
-    // Required dependency
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+  // Required dependency
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }
 ```
 
@@ -50,10 +50,16 @@ dependencies {
 
 **📦 What's Included:**
 
-- **Core SDK** (3.9MB): Component architecture, model management, event system
+- **Core SDK** (4.0MB): Component architecture, model management, event system, analytics, prompt-based tool calling
 - **LlamaCpp Module** (2.1MB): 7 optimized llama.cpp native libraries for ARM64
   - Variants: Baseline, fp16, dotprod, v8.4, i8mm, sve, i8mm+sve
   - Runtime CPU feature detection automatically selects best variant
+
+**🆕 New in v0.1.1-alpha:**
+
+- Prompt-based tool calling with few-shot examples
+- Analytics improvements with device registration
+- JVM platform fixes for cross-platform compatibility
 
 ---
 
@@ -75,12 +81,12 @@ In your **project-level** `settings.gradle.kts`:
 
 ```kotlin
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
-    }
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositories {
+    google()
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+  }
 }
 ```
 
@@ -88,44 +94,44 @@ In your **app-level** `build.gradle.kts`:
 
 ```kotlin
 android {
-    namespace = "com.example.myapp"
-    compileSdk = 36
+  namespace = "com.example.myapp"
+  compileSdk = 36
 
-    defaultConfig {
-        applicationId = "com.example.myapp"
-        minSdk = 24
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
-    }
+  defaultConfig {
+    applicationId = "com.example.myapp"
+    minSdk = 24
+    targetSdk = 36
+    versionCode = 1
+    versionName = "1.0"
+  }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+  }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+  kotlinOptions {
+    jvmTarget = "17"
+  }
 }
 
 dependencies {
-    // RunAnywhere SDK - Core (v0.1.0-alpha)
-    implementation("com.github.RunanywhereAI.runanywhere-sdks:runanywhere-kotlin:android-v0.1.0-alpha")
+  // RunAnywhere SDK - Core (v0.1.1-alpha)
+  implementation("com.github.RunanywhereAI.runanywhere-sdks:runanywhere-kotlin:android-v0.1.1-alpha")
 
-    // RunAnywhere SDK - LLM Module (includes llama.cpp with 7 ARM64 CPU variants)
-    implementation("com.github.RunanywhereAI.runanywhere-sdks:runanywhere-llm-llamacpp:android-v0.1.0-alpha")
+  // RunAnywhere SDK - LLM Module (includes llama.cpp with 7 ARM64 CPU variants)
+  implementation("com.github.RunanywhereAI.runanywhere-sdks:runanywhere-llm-llamacpp:android-v0.1.1-alpha")
 
-    // Required: Kotlin Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+  // Required: Kotlin Coroutines
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    // Optional: Jetpack Compose (for UI in this quickstart)
-    implementation(platform("androidx.compose:compose-bom:2024.02.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+  // Optional: Jetpack Compose (for UI in this quickstart)
+  implementation(platform("androidx.compose:compose-bom:2024.02.00"))
+  implementation("androidx.compose.ui:ui")
+  implementation("androidx.compose.material3:material3")
+  implementation("androidx.compose.ui:ui-tooling-preview")
+  implementation("androidx.activity:activity-compose:1.8.2")
+  implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 }
 ```
 
@@ -136,9 +142,9 @@ dependencies {
   - Baseline, fp16, dotprod, v8.4, i8mm, sve, i8mm+sve variants
   - Runtime CPU feature detection selects best variant automatically
 
-**🔖 Latest Release:** `android-v0.1.0-alpha`
+**🔖 Latest Release:** `android-v0.1.1-alpha`
 
-**📄 Release Notes:** [GitHub Release](https://github.com/RunanywhereAI/runanywhere-sdks/releases/tag/android-v0.1.0-alpha)
+**📄 Release Notes:** [GitHub Release](https://github.com/RunanywhereAI/runanywhere-sdks/releases/tag/android-v0.1.1-alpha)
 
 ---
 
