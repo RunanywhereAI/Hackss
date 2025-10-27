@@ -47,13 +47,6 @@ class MyApplication : Application() {
     }
 
     private suspend fun registerModels() {
-        // Smallest model - great for testing (119 MB)
-        addModelFromURL(
-            url = "https://huggingface.co/prithivMLmods/SmolLM2-360M-GGUF/resolve/main/SmolLM2-360M.Q8_0.gguf",
-            name = "SmolLM2 360M Q8_0",
-            type = "LLM"
-        )
-
         // Medium-sized model - better quality (374 MB)
         addModelFromURL(
             url = "https://huggingface.co/Triangle104/Qwen2.5-0.5B-Instruct-Q6_K-GGUF/resolve/main/qwen2.5-0.5b-instruct-q6_k.gguf",
